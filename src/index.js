@@ -138,7 +138,10 @@ class Square extends React.Component {
         super(props);
         this.state = {
           locale: 'fr',
-          menu: 'main'
+          menu: 'main',
+          error: null,
+          isLoaded: false,
+          locales: []          
         };
         this.handleLocaleChange = this.handleLocaleChange.bind(this);
         this.handleMenuChange = this.handleMenuChange.bind(this);
@@ -152,12 +155,40 @@ class Square extends React.Component {
         this.setState({
             menu: new_menu
         })
-      }      
+      }
+      componentDidMount() {
+        fetch("http://localhost:4000/locales")
+          .then(res => res.json())
+          .then(
+            (result) => {
+              this.setState({
+                isLoaded: true,
+                locales: result
+              });
+            },
+            // Note: it's important to handle errors here
+            // instead of a catch() block so that we don't swallow
+            // exceptions from actual bugs in components.
+            (error) => {
+              this.setState({
+                isLoaded: true,
+                error
+              });
+            }
+          )
+      }
     render() {
+        const { error, isLoaded, locales } = this.state;
+        if (error) {
+            return <div>Error: {error.message}</div>;
+          } else if (!isLoaded) {
+            return <div>Loading...</div>;
+          } else {
       return (
+
       <div>
           <Navbar 
-            locales={this.props.locales} 
+            locales={locales} 
             menus={this.props.menus}
             pages={this.props.pages}
             locale={this.state.locale}
@@ -168,19 +199,20 @@ class Square extends React.Component {
 
       </div>
       );
+          }
     }
   }
   
   // ========================================
   
-  const LOCALES = [
+/*   const LOCALES = [
       {id: 'fr', value: 'Français'},
       {id: 'en', value: 'English'}
-  ]
+  ] */
 
   const MENUS = [
       {id: 'main', parent: null, order: 1},
-      {id: 'rooms', parent: null, order: 2},
+      {id: 'rooms', parent: null, order: 2, child: [{id: 'tour', parent: 'rooms', order: 1}]},
       {id: 'tour', parent: 'rooms', order: 1},
       {id: 'activity', parent: null, order: 3},
   ]
@@ -190,7 +222,7 @@ class Square extends React.Component {
   ]
 
   ReactDOM.render(
-    <Page locales={LOCALES} menus={MENUS} pages={PAGES}/>,
+    <Page  menus={MENUS} pages={PAGES}/>,
     document.getElementById('root')
   );
   
