@@ -20,5 +20,13 @@
   "pages": [
     { "id": "le-manoir-de-juganville", "menuId": "main", "localeId": "fr" },
     { "id": "juganville-manor", "menuId": "main", "localeId": "en" }
+  ],
+  "blocks": [
+    { "pageId": "juganville-manor", "content": "<p>&nbsp;Our XVI century&nbsp;Manor House&nbsp;is an excellent base from which to explore the attractions of the area. It&rsquo;s within easy &ndash; driving distance of Sainte-M&egrave;re-Eglise, the D-Day landing Beaches, Bayeux&nbsp;and Le Mont Saint MIchel.</p><p>&nbsp;Our non-smoking rooms have been decorated to create an intimate atmosphere: refined&nbsp;but relaxed,&nbsp;combining charm&nbsp;and confort.</p><p>Each room has a private bathroom.</p><p>&nbsp;</p>"}
+  ],
+  "application": [
+    {
+      "name": "Manoir de Juganville"
+    }
   ]
 }

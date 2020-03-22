@@ -80,7 +80,7 @@ class Dropdown extends React.Component {
 
     this.props.menu.menus.forEach(element => {
       var localizedSubMenuName = element.id;
-      
+
       this.props.menus.forEach(menu => {
         if (menu.id === element.id) {
           menu.localizedMenus.forEach(localizedMenu => {
@@ -100,13 +100,13 @@ class Dropdown extends React.Component {
 
     return (
       <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        {localizedMenuName}
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {localizedMenuName}
         </a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        {rows}
-      </div>
-    </li>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          {rows}
+        </div>
+      </li>
     )
   }
 }
@@ -135,7 +135,7 @@ class Navbar extends React.Component {
 
     this.props.menus.forEach(element => {
       if (element.menus.length == 0 && element.menuId == null) {
-        menu_rows.push(<Menu menu={element} currentMenu={this.props.menu} onMenuChange={this.handleMenuChange} locale={this.props.locale}/>);
+        menu_rows.push(<Menu menu={element} currentMenu={this.props.menu} onMenuChange={this.handleMenuChange} locale={this.props.locale} />);
       }
       if (element.menus.length > 0) {
         menu_rows.push(<Dropdown menus={this.props.menus} menu={element} currentMenu={this.props.menu} onMenuChange={this.handleMenuChange} locale={this.props.locale} />);
@@ -179,7 +179,8 @@ class Page extends React.Component {
       isLocalesLoaded: false,
       isMenusLoaded: false,
       locales: [],
-      menus: []
+      menus: [],
+      message: null
     };
     this.handleLocaleChange = this.handleLocaleChange.bind(this);
     this.handleMenuChange = this.handleMenuChange.bind(this);
@@ -193,6 +194,30 @@ class Page extends React.Component {
     this.setState({
       menu: new_menu
     })
+  }
+  fetchData(url, result) {
+    this.setState({
+      message: "Loading " + url
+    })
+    fetch("url")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLocalesLoaded: true,
+            result: result
+          });
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (errorLocales) => {
+          this.setState({
+            isLocalesLoaded: true,
+            errorLocales
+          });
+        }
+      )
   }
   componentDidMount() {
     fetch("http://localhost:4000/locales")
@@ -290,6 +315,6 @@ class Page extends React.Component {
 ] */
 
 ReactDOM.render(
-  <Page  />,
+  <Page />,
   document.getElementById('root')
 );
