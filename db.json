@@ -10,8 +10,12 @@
     { "id": "activity",  "order": 3 }
   ],
   "localizedMenus": [
-    {"id": 1, "menuId": "main", "localeId": "fr", "name": "Chambre d'hôtes"},
-    {"id": 2, "menuId": "main", "localeId": "en", "name": "Bed & Breakfast"}
+    {"menuId": "main", "localeId": "fr", "name": "Chambre d'hôtes"},
+    {"menuId": "main", "localeId": "en", "name": "Bed & Breakfast"},
+    {"menuId": "rooms", "localeId": "fr", "name": "Les Chambres"},
+    {"menuId": "rooms", "localeId": "en", "name": "Rooms"},
+    {"menuId": "tour", "localeId": "fr", "name": "La Tour"},
+    {"menuId": "tour", "localeId": "en", "name": "The Tour"}
   ],
   "pages": [
     { "id": "le-manoir-de-juganville", "menuId": "main", "localeId": "fr" },

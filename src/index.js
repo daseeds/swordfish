@@ -76,14 +76,32 @@ class Menu extends React.Component {
 class Dropdown extends React.Component {
   render() {
     const rows = [];
+    var localizedMenuName = this.props.menu.id;
+
     this.props.menu.menus.forEach(element => {
-      rows.push(<a class="dropdown-item" href="#" onClick={() => this.props.onMenuChange(element.id)}>{element.id}</a>)
+      var localizedSubMenuName = element.id;
+      
+      this.props.menus.forEach(menu => {
+        if (menu.id === element.id) {
+          menu.localizedMenus.forEach(localizedMenu => {
+            if (localizedMenu.localeId === this.props.locale) {
+              localizedSubMenuName = localizedMenu.name
+            }
+          })
+        }
+      })
+      rows.push(<a class="dropdown-item" href="#" onClick={() => this.props.onMenuChange(element.id)}>{localizedSubMenuName}</a>)
+    })
+    this.props.menu.localizedMenus.forEach(element => {
+      if (element.localeId === this.props.locale) {
+        localizedMenuName = element.name;
+      }
     })
 
     return (
       <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        {this.props.menu.id}
+        {localizedMenuName}
         </a>
       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         {rows}
@@ -120,7 +138,7 @@ class Navbar extends React.Component {
         menu_rows.push(<Menu menu={element} currentMenu={this.props.menu} onMenuChange={this.handleMenuChange} locale={this.props.locale}/>);
       }
       if (element.menus.length > 0) {
-        menu_rows.push(<Dropdown menu={element} currentMenu={this.props.menu} onMenuChange={this.handleMenuChange} locale={this.props.locale} />);
+        menu_rows.push(<Dropdown menus={this.props.menus} menu={element} currentMenu={this.props.menu} onMenuChange={this.handleMenuChange} locale={this.props.locale} />);
       }
     });
 
