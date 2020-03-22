@@ -1,23 +1,20 @@
 {
-  "posts": [
-    {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
-  "profile": {
-    "name": "typicode"
-  },
   "locales": [
     {"id": "fr", "value": "Français"},
     {"id": "en", "value": "English"}    
+  ],
+  "menus": [
+    { "id": "main",  "order": 1 },
+    { "id": "rooms",  "order": 2},
+    { "id": "tour", "menuId": "rooms", "order": 1 },
+    { "id": "activity",  "order": 3 }
+  ],
+  "localizedMenus": [
+    {"id": 1, "menuId": "main", "localeId": "fr", "name": "Chambre d'hôtes"},
+    {"id": 2, "menuId": "main", "localeId": "en", "name": "Bed & Breakfast"}
+  ],
+  "pages": [
+    { "id": "le-manoir-de-juganville", "menuId": "main", "localeId": "fr" },
+    { "id": "juganville-manor", "menuId": "main", "localeId": "en" }
   ]
 }
