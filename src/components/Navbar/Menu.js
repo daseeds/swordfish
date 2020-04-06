@@ -16,8 +16,8 @@ const Menu = (props) => {
   })
 
   return (
-    <li class={className}>
-      <a class="nav-link" href="#" onClick={() => props.onMenuChange(menu.id)}>{localizedMenuName} {current} </a>
+    <li className={className}>
+      <a className="nav-link" href="#" onClick={() => props.onMenuChange(menu.id)}>{localizedMenuName} {current} </a>
     </li>
   )
 }

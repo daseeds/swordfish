@@ -117,8 +117,8 @@ class Page extends Component {
             pages={this.props.pages}
             locale={this.state.locale}
             menu={this.state.menu}
-            onLocaleChange={this.handleLocaleChange}
-            onMenuChange={this.handleMenuChange}
+            localeChanged={this.handleLocaleChange}
+            menuChanged={this.handleMenuChange}
           />
           {messageLocales}
           {messageMenus}

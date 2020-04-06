@@ -17,7 +17,7 @@ class Dropdown extends Component {
             })
           }
         })
-        rows.push(<a class="dropdown-item" href="#" onClick={() => this.props.onMenuChange(element.id)}>{localizedSubMenuName}</a>)
+        rows.push(<a className="dropdown-item" href="#" onClick={() => this.props.onMenuChange(element.id)}>{localizedSubMenuName}</a>)
       })
       this.props.menu.localizedMenus.forEach(element => {
         if (element.localeId === this.props.locale) {
