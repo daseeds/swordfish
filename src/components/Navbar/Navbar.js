@@ -1,25 +1,14 @@
 import React from 'react';
-import Menu from './Menu'
-import Dropdown from './Dropdown';
+import Menus from './Menus';
 
 const Navbar = (props) => {
   const locales_rows = [];
-  const menu_rows = [];
   var currentLocale = "";
 
   props.locales.forEach(element => {
     locales_rows.push(<a className="dropdown-item" href="#" onClick={() => props.localeChanged(element.id)} key={element.value}  >{element.value}</a>);
     if (props.locale === element.id) {
       currentLocale = element.value;
-    }
-  });
-
-  props.menus.forEach(element => {
-    if (element.menus.length == 0 && element.menuId == null) {
-      menu_rows.push(<Menu menu={element} currentMenu={props.menu} onMenuChange={props.menuChanged} locale={props.locale} key={element.id} />);
-    }
-    if (element.menus.length > 0) {
-      menu_rows.push(<Dropdown menus={props.menus} menu={element} currentMenu={props.menu} onMenuChange={props.menuChanged} locale={props.locale} key={element.id} />);
     }
   });
 
@@ -31,7 +20,7 @@ const Navbar = (props) => {
       </button>
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
-          {menu_rows}
+          <Menus menus={props.menus} currentMenu={props.menu} changed={props.menuChanged} locale={props.locale} />
         </ul>
         <ul className="nav navbar-nav navbar-right">
           <li className="nav-item dropdown">

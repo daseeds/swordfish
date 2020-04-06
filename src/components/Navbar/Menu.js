@@ -1,11 +1,11 @@
 import React from 'react';
 
 const Menu = (props) => {
-  const menu = props.menu;
+  console.log("[Menu.js]", props)
   let current = null;
   let className = "nav-item";
   let localizedMenuName = props.menu.id;
-  if (props.currentMenu === menu.id) {
+  if (props.currentMenu === props.menu.id) {
     current = <span className="sr-only">(current)</span>;
     className = "nav-item active";
   }
@@ -17,7 +17,7 @@ const Menu = (props) => {
 
   return (
     <li className={className}>
-      <a className="nav-link" href="#" onClick={() => props.onMenuChange(menu.id)}>{localizedMenuName} {current} </a>
+      <a className="nav-link" href="#" onClick={() => props.changed(props.menu.id)}>{localizedMenuName} {current} </a>
     </li>
   )
 }

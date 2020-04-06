@@ -93,14 +93,13 @@ class Page extends Component {
         )
     }
     render() {
-      const { errorLocales, errorMenus, isMenusLoaded, isLocalesLoaded, locales, menus } = this.state;
+      const { errorLocales, errorMenus, isMenusLoaded, isLocalesLoaded } = this.state;
       var messageLocales = "";
       var messageMenus = "";
       if (errorLocales) {
         messageLocales = <div>Error: {errorLocales.message}</div>;
       } else if (!isLocalesLoaded) {
         messageLocales = <div>Loading Locales...</div>;
-        const { error, isLoaded, locales } = this.state;
       }
       if (errorMenus) {
         messageMenus = <div>Error: {errorMenus.message}</div>;
@@ -112,8 +111,8 @@ class Page extends Component {
   
         <div>
           <Navbar
-            locales={locales}
-            menus={menus}
+            locales={this.state.locales}
+            menus={this.state.menus}
             pages={this.props.pages}
             locale={this.state.locale}
             menu={this.state.menu}

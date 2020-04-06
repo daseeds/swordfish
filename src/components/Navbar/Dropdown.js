@@ -1,41 +1,26 @@
-import React, {Component} from 'react';
+import React from 'react';
+import DropdownItems from './DropdownItems';
+import NavDropdown from 'react-bootstrap/NavDropdown'
 
-class Dropdown extends Component {
-    render() {
-      const rows = [];
-      var localizedMenuName = this.props.menu.id;
-  
-      this.props.menu.menus.forEach(element => {
-        var localizedSubMenuName = element.id;
-  
-        this.props.menus.forEach(menu => {
-          if (menu.id === element.id) {
-            menu.localizedMenus.forEach(localizedMenu => {
-              if (localizedMenu.localeId === this.props.locale) {
-                localizedSubMenuName = localizedMenu.name
-              }
-            })
-          }
-        })
-        rows.push(<a className="dropdown-item" href="#" onClick={() => this.props.onMenuChange(element.id)}>{localizedSubMenuName}</a>)
-      })
-      this.props.menu.localizedMenus.forEach(element => {
-        if (element.localeId === this.props.locale) {
-          localizedMenuName = element.name;
-        }
-      })
-  
-      return (
-        <li className="nav-item dropdown">
-          <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {localizedMenuName}
-          </a>
-          <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-            {rows}
-          </div>
-        </li>
-      )
+const Dropdown = (props) => {
+
+  const rows = [];
+  var localizedMenuName = props.menu.id;
+
+
+  props.menu.localizedMenus.forEach(element => {
+    if (element.localeId === props.locale) {
+      localizedMenuName = element.name;
     }
-  }
+  });
+
+  return (
+    <NavDropdown title={localizedMenuName} id="basic-nav-dropdown">
+      <DropdownItems changed={props.changed} menus={props.menus} menu={props.menu} />
+    </NavDropdown>
+
+  )
+}
+
 
 export default Dropdown;
