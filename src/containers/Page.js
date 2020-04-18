@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Navbar from '../components/Navbar/Navbar'
 
 class Page extends Component {
     constructor(props) {
@@ -110,7 +109,7 @@ class Page extends Component {
       return (
   
         <div>
-          <Navbar
+          {/* <Navbar
             locales={this.state.locales}
             menus={this.state.menus}
             pages={this.props.pages}
@@ -118,7 +117,7 @@ class Page extends Component {
             menu={this.state.menu}
             localeChanged={this.handleLocaleChange}
             menuChanged={this.handleMenuChange}
-          />
+          /> */}
           {messageLocales}
           {messageMenus}
   

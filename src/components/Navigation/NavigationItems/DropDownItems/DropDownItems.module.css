@@ -1,0 +1,61 @@
+.DropDownItems {
+    margin: 0;
+    display: flex;
+    height: 100%;
+    width: auto;
+    align-items: center;
+
+}
+
+.DropDownItems a {
+    color: white;
+    height: 100%;
+    padding: 16px 10px;
+    border-bottom: 4px solid transparent;
+}
+
+.DropDownItems a:hover,
+.DropDownItems a:active,
+.DropDownItems a.active {
+    background-color: rgb(73, 102, 131);
+    border-bottom: 4px solid #40a4c8 ;
+    color: white;
+}
+
+.DropDownItems ul {
+    text-align: left;
+    position: absolute;
+    top: 100%;
+    /*left: 0;*/
+    z-index: 500;
+    float: left;
+    min-width: 160px;
+    list-style: none;
+    padding: 5px;
+    margin: 2px 0 0;
+    margin-top: 0;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    background-clip: padding-box;
+}
+
+.Caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: 4px solid #000;
+    border-right: 4px solid transparent;
+    border-bottom: 0 dotted;
+    border-left: 4px solid transparent;
+    border-top-color: #fff;
+    border-bottom-color: #fff;        
+}
+
+@media (min-width: 500px) {
+    .DropDownItems {
+        flex-flow: row;
+    }
+}

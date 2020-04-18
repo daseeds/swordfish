@@ -1,0 +1,18 @@
+.DropDownItem li a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.428571429;
+    color: #7b8a8b;
+    white-space: nowrap;    
+    background: transparent;
+}
+
+.DropDownItem li a:hover,
+.DropDownItem li a:active,
+.DropDownItem li a.active {
+    background-color: #2C3E50;
+    color: white;
+    border-bottom: none;
+}
