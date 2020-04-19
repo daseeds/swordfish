@@ -1,4 +1,4 @@
-.DropDownItem li a {
+.DropDownItem  a {
     display: block;
     padding: 3px 20px;
     clear: both;
@@ -7,12 +7,18 @@
     color: #7b8a8b;
     white-space: nowrap;    
     background: transparent;
+    cursor: pointer;
+    text-decoration: none;
 }
 
-.DropDownItem li a:hover,
-.DropDownItem li a:active,
-.DropDownItem li a.active {
+.DropDownItem  a:hover,
+.DropDownItem  a:active,
+.DropDownItem  a.active {
     background-color: #2C3E50;
     color: white;
     border-bottom: none;
+}
+
+@media (min-width: 500px) {
+
 }

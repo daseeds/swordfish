@@ -1,21 +1,11 @@
 import React from 'react';
-import classes from './DropDownItem.module.css'
+import classes from './DropDownItem.module.css';
 
-const DropdownItem = (props) => {
-  // var localizedName = props.menu.id;
+const dropdownItem = (props) => {
 
-  // props.menus.forEach(menu => {
-  //   if (menu.id === props.menu.id) {
-  //     menu.localizedMenus.forEach(localizedMenu => {
-  //       if (localizedMenu.localeId === props.locale) {
-  //         localizedName = localizedMenu.name
-  //       }
-  //     })
-  //   }
-  // })
   return (
     <li className={classes.DropDownItem}>
-      <a href={props.link}
+      <a href={props.url}
         className={props.active ? classes.active : null}
       >
         {props.children}</a>
@@ -24,4 +14,4 @@ const DropdownItem = (props) => {
 
 }
 
-export default DropdownItem;
+export default dropdownItem;

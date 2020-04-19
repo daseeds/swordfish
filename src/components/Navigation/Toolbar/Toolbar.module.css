@@ -17,8 +17,28 @@
     height: 100%;
 }
 
-.Logo {
-    height: 80%;
+.Brand {
+    font-family: "garamond-premier-pro", serif;
+    font-style: italic;
+    font-size: 30px;
+    text-decoration: none;
+    color: white;
+    display: block;
+    box-sizing: border-box;
+    height: 100%;
+    padding: 10px 10px;
+
+}
+
+.LocalesDropDown ul {
+    right: 0;
+    left: auto;
+}
+
+.Brand:hover,
+.Brand:active,
+.Brand.active {
+    background-color: #1a242f;
 }
 
 @media (max-width: 499px) {
