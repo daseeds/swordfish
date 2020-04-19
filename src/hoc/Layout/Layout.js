@@ -5,13 +5,13 @@ import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 import axios from '../../axios-swordfish';
 import withErrorHandler from '../withErrorHandler/withErrorHandler';
 import Spinner from '../../components/UI/Spinner/Spinner';
-
-
+import Page from '../../containers/Page/Page';
+import { Route } from 'react-router-dom';
 
 class Layout extends Component {
     state = {
         locale: 'fr',
-        menu: 'main',
+        page: 'main',
         locales: null,
         loading: true
     }
@@ -34,10 +34,14 @@ class Layout extends Component {
         return (
             <Aux>
                 {loadingSpinner}
-                <Toolbar currentLocale={this.state.locale} locales={this.state.locales}/>
+                <Toolbar 
+                    currentLocale={this.state.locale} 
+                    currentPage={this.state.page} 
+                    locales={this.state.locales}
+
+                    />
                 <main className={classes.Content}>
-                    Page
-                {/* {props.children} */}
+                    <Route path="/:locale/:page" exact component={Page} />
                 </main>
             </Aux>
         )

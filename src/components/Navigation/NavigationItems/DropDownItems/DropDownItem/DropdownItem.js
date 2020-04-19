@@ -1,14 +1,15 @@
 import React from 'react';
 import classes from './DropDownItem.module.css';
+import { NavLink } from 'react-router-dom';
 
 const dropdownItem = (props) => {
 
   return (
     <li className={classes.DropDownItem}>
-      <a href={props.url}
+      <NavLink to={props.url}
         className={props.active ? classes.active : null}
       >
-        {props.children}</a>
+        {props.children}</NavLink>
     </li>
   );
 

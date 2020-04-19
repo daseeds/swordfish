@@ -1,15 +1,16 @@
 import React from 'react';
 import './App.css';
-import Page from './containers/Page'
 import Layout from './hoc/Layout/Layout';
+import { BrowserRouter } from 'react-router-dom';
+
 
 function App() {
   return (
-    <div className="App">
-      <Layout>
-        <Page />
-      </Layout>
-    </div>
+    <BrowserRouter >
+      <div className="App">
+        <Layout />
+      </div>
+    </BrowserRouter>
   );
 }
 

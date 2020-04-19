@@ -37,7 +37,7 @@ class dropdownItems extends Component {
             items = Object.keys(this.props.items).map(itemKey => {
                 return <DropDownItem 
                             key={this.props.items[itemKey].name}
-                            url={'/'+this.props.currentLocale + '/' + this.props.items[itemKey].page} 
+                            url={'/'+ (this.props.items[itemKey].locale ? itemKey : this.props.currentLocale) + '/' + this.props.items[itemKey].page} 
                             >
                             {this.props.items[itemKey].name}
                         </DropDownItem>

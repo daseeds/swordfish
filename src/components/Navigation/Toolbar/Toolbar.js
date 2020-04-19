@@ -9,11 +9,16 @@ const toolbar = (props) => {
     let navigation = null;
     let currentLocaleName = null;
     let currentLocale = null;
-    if (props.locales && props.currentLocale) {
+    if (props.locales && props.currentLocale && props.currentPage) {
         navigation = props.locales[props.currentLocale].menus;
         localesDropDown = props.locales;
         currentLocaleName = props.locales[props.currentLocale].name;
         currentLocale = props.currentLocale;
+        for (let [key, value] of Object.entries(localesDropDown)) {
+            console.log(key, value);
+            localesDropDown[key].page = localesDropDown[key].menus[props.currentPage].page;
+            localesDropDown[key].locale = true;
+        }
     }
     return (
         <header className={classes.Toolbar}>
@@ -27,7 +32,9 @@ const toolbar = (props) => {
             <nav className={classes.LocalesDropDown}>
                 <DropDownItems 
                     items={localesDropDown} 
-                    dropDownTitle={currentLocaleName}/>
+                    dropDownTitle={currentLocaleName}
+                    currentLocale={currentLocale}
+                    />
             </nav>
         </header>
     )
