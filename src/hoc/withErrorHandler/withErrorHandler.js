@@ -25,7 +25,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
         }
 
         shouldComponentUpdate(nextProps, nextState) {
-            console.log("[withErrorHandler] shouldcomponentupdate state.error=" + this.state.error);
+            //console.log("[withErrorHandler] shouldcomponentupdate state.error=" + this.state.error);
             return true;
         }
 
@@ -34,7 +34,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
         }
 
         render() {
-            console.log("[withErrorHandler] state.error=" + this.state.error);
+            //console.log("[withErrorHandler] state.error=" + this.state.error);
             return (
                 <Aux>
                     <Modal show={this.state.error} modalClosed={this.errorConfirmedHandler}>

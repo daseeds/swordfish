@@ -38,7 +38,9 @@ class dropdownItems extends Component {
                 return <DropDownItem 
                             key={this.props.items[itemKey].name}
                             url={'/'+ (this.props.items[itemKey].locale ? itemKey : this.props.currentLocale) + '/' + this.props.items[itemKey].page} 
+                            clicked={this.dropDownToggleHandler}
                             >
+                            
                             {this.props.items[itemKey].name}
                         </DropDownItem>
             });

@@ -9,13 +9,14 @@ const toolbar = (props) => {
     let navigation = null;
     let currentLocaleName = null;
     let currentLocale = null;
+    console.log("[Toolbar.js] ", props)
     if (props.locales && props.currentLocale && props.currentPage) {
         navigation = props.locales[props.currentLocale].menus;
         localesDropDown = props.locales;
         currentLocaleName = props.locales[props.currentLocale].name;
         currentLocale = props.currentLocale;
-        for (let [key, value] of Object.entries(localesDropDown)) {
-            console.log(key, value);
+        //TODO: Fix incoherence, layout gives a page and we need a menu
+        for (let [key] of Object.entries(localesDropDown)) {
             localesDropDown[key].page = localesDropDown[key].menus[props.currentPage].page;
             localesDropDown[key].locale = true;
         }

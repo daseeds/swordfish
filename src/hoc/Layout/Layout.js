@@ -6,7 +6,7 @@ import axios from '../../axios-swordfish';
 import withErrorHandler from '../withErrorHandler/withErrorHandler';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Page from '../../containers/Page/Page';
-import { Route } from 'react-router-dom';
+
 
 class Layout extends Component {
     state = {
@@ -17,6 +17,7 @@ class Layout extends Component {
     }
 
     componentDidMount() {
+        console.log("[Layout.js] componentDidMount")
         axios.get('/locales.json')
             .then(response => {
                 this.setState({ locales: response.data, loading: false });
@@ -25,8 +26,26 @@ class Layout extends Component {
                 this.setState({error: true, loading: false})
             });
     }
+    componentDidUpdate(prevProps) {
+        console.log("[Layout.js] componentDidUpdate")
+        if (prevProps.match.params.page !== this.props.match.params.page) {
+            console.log("[Layout.js] ", this.props.match.params);
+            // BUG - page or menu ???
+            this.setState({page: this.props.match.params.page})
+
+
+        }
+    }
+
 
     render() {
+        if (this.props.match.params.locale && this.props.match.params.locale !== this.state.locale) {
+            this.setState({locale: this.props.match.params.locale})
+        }
+        // if (this.props.match.params && this.props.match.params.page && this.props.match.params.page !== this.state.page) {
+        //     this.setState((state, props) => ({page: props.match.params.page}));
+        // }
+
         let loadingSpinner = null;
         if (this.state.loading) {
             loadingSpinner = <Spinner />;
@@ -41,7 +60,11 @@ class Layout extends Component {
 
                     />
                 <main className={classes.Content}>
-                    <Route path="/:locale/:page" exact component={Page} />
+                    {/* <Route path="/:locale/:page" exact component={Page} /> */}
+                    <Page 
+                        locale={this.state.locale}
+                        page={this.state.page}
+                        />
                 </main>
             </Aux>
         )

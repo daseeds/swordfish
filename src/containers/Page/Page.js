@@ -14,11 +14,11 @@ class Page extends Component {
         if (this.props.id) {
             page = <p style={{ textAlign: 'center' }}>Loading</p>;
         }
-  
-      return (
+
+       return (
   
         <div>
-            {this.props.match.params.locale} / {this.props.match.params.page}
+            {/* {this.props.match.params.locale} / {this.props.match.params.page} */}
             {page}
         </div>
       );
