@@ -8,16 +8,18 @@ const navigationItems = (props) => {
     let items = <Spinner />;
     if (props.items) {
         items = Object.keys(props.items).map(itemKey => {
-            if (props.items[itemKey].type === null || props.items[itemKey].type === "page") {
+            if (props.items[itemKey].type === null || !props.items[itemKey].menus) {
+                console.log("[NavigationItem] ", props.items[itemKey].name[props.locale])
                 return <NavigationItem 
-                            key={props.items[itemKey].name}
-                            url={'/'+props.currentLocale+'/'+props.items[itemKey].page} >{props.items[itemKey].name}</NavigationItem>
+                            key={props.items[itemKey].name[props.locale]}
+                            url={'/'+props.locale+'/'+props.items[itemKey].url[props.locale]}
+                            locale={props.locale} >{props.items[itemKey].name[props.locale]}</NavigationItem>
             }
             return <DropDownItems 
                         items={props.items[itemKey].menus} 
-                        key={props.items[itemKey].name}
-                        currentLocale={props.currentLocale}
-                        dropDownTitle={props.items[itemKey].name}/>
+                        key={props.items[itemKey].name[props.locale]}
+                        locale={props.locale}
+                        dropDownTitle={props.items[itemKey].name[props.locale]}/>
         });
     }
     return (

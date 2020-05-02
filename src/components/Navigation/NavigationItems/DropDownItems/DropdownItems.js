@@ -36,12 +36,12 @@ class dropdownItems extends Component {
         if (this.props.items) {
             items = Object.keys(this.props.items).map(itemKey => {
                 return <DropDownItem 
-                            key={this.props.items[itemKey].name}
-                            url={'/'+ (this.props.items[itemKey].locale ? itemKey : this.props.currentLocale) + '/' + this.props.items[itemKey].page} 
+                            key={this.props.items[itemKey].name[this.props.locale]}
+                            url={'/'+ (this.props.items[itemKey].locale ? itemKey : this.props.locale) + '/' + this.props.items[itemKey].url[this.props.locale]} 
                             clicked={this.dropDownToggleHandler}
                             >
                             
-                            {this.props.items[itemKey].name}
+                            {this.props.items[itemKey].name[this.props.locale]}
                         </DropDownItem>
             });
         }

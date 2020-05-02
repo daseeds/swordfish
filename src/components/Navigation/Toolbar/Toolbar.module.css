@@ -41,6 +41,9 @@
     background-color: #1a242f;
 }
 
+
+
+
 @media (max-width: 499px) {
     .DesktopOnly {
         display: none;

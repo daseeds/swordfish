@@ -5,71 +5,74 @@ import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 import axios from '../../axios-swordfish';
 import withErrorHandler from '../withErrorHandler/withErrorHandler';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import Page from '../../containers/Page/Page';
+import { connect } from "react-redux";
+import * as actions from "../../store/actions/index";
 
 
 class Layout extends Component {
-    state = {
-        locale: 'fr',
-        page: 'main',
-        locales: null,
-        loading: true
-    }
+
 
     componentDidMount() {
         console.log("[Layout.js] componentDidMount")
-        axios.get('/locales.json')
-            .then(response => {
-                this.setState({ locales: response.data, loading: false });
-            })
-            .catch(error => {
-                this.setState({error: true, loading: false})
-            });
+        this.props.onFectchNav();
+        
     }
     componentDidUpdate(prevProps) {
         console.log("[Layout.js] componentDidUpdate")
-        if (prevProps.match.params.page !== this.props.match.params.page) {
-            console.log("[Layout.js] ", this.props.match.params);
-            // BUG - page or menu ???
-            this.setState({page: this.props.match.params.page})
-
-
-        }
+        // if (prevProps.match.params.page !== this.props.match.params.page) {
+        //     console.log("[Layout.js] ", this.props.match.params);
+        //     // BUG - page or menu ???
+        //     this.setState({page: this.props.match.params.page})
+        // }
     }
 
 
     render() {
-        if (this.props.match.params.locale && this.props.match.params.locale !== this.state.locale) {
-            this.setState({locale: this.props.match.params.locale})
-        }
+        // if (this.props.match.params.locale && this.props.match.params.locale !== this.state.locale) {
+        //     this.setState({locale: this.props.match.params.locale})
+        // }
         // if (this.props.match.params && this.props.match.params.page && this.props.match.params.page !== this.state.page) {
         //     this.setState((state, props) => ({page: props.match.params.page}));
         // }
 
         let loadingSpinner = null;
-        if (this.state.loading) {
+        if (this.props.loading) {
             loadingSpinner = <Spinner />;
         }             
         return (
             <Aux>
                 {loadingSpinner}
                 <Toolbar 
-                    currentLocale={this.state.locale} 
-                    currentPage={this.state.page} 
-                    locales={this.state.locales}
+                    locale={this.props.locale} 
+                    page={this.props.page} 
+                    locales={this.props.nav}
 
                     />
                 <main className={classes.Content}>
-                    {/* <Route path="/:locale/:page" exact component={Page} /> */}
-                    <Page 
-                        locale={this.state.locale}
-                        page={this.state.page}
-                        />
+                    {this.props.children}
                 </main>
             </Aux>
         )
     }
 }
 
-export default withErrorHandler(Layout, axios);
+const mapStateToProps = (state) => {
+    return {
+        nav: state.nagivation.nav,
+        loading: state.nagivation.loading,
+        locale: state.nagivation.locale,
+        page: state.nagivation.page,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onFectchNav: () => dispatch(actions.navFetch()),
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withErrorHandler(Layout, axios));
 
