@@ -1,0 +1,56 @@
+.PlaceHolder {
+    display: inline-block;
+    background-color: #fff;
+    margin: 30px;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    vertical-align: top;
+    width: 100%;
+
+    font-size: 0;
+    line-height: 0;
+
+    display: inline-block;
+    height: 12px;
+    border-radius: 100px;
+    margin: 5px 0;
+    min-width: 100px;
+    opacity: 0.1;
+    animation: fading 1.5s infinite;
+}
+
+.PlaceHolder:first-child {
+    margin-top: 0;
+}
+
+.PlaceHolder:last-child {
+    margin-bottom: 0;
+}
+
+.PlaceHolder.link {
+    background-color: var(--blue);
+    opacity: 0.4;
+}
+
+.PlaceHolder.line {
+    width: 100%;
+}
+
+.PlaceHolder.category {
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+@keyframes fading {
+    0% {
+      opacity: .1;
+    }
+    
+    50% {
+      opacity: .2;
+    }
+    
+    100% {
+      opacity: .1;
+    }
+  }

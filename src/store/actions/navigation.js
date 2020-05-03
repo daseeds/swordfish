@@ -34,39 +34,3 @@ export const navFetch = () => {
             });
     };
 };
-
-export const navPageLoadStart = () => {
-    return {
-        type: actions.NAV_PAGE_LOAD_START,
-    };    
-};
-
-export const navPageLoadFail = (error) => {
-    return {
-        type: actions.NAV_PAGE_LOAD_FAILED,
-        error: error,
-    };        
-};
-
-export const navPageLoadSuccess = (locale, page, content) => {
-    return {
-        type: actions.NAV_PAGE_LOAD_SUCCESS,
-        page: page,
-        locale: locale,
-        content: content
-    };        
-};
-
-export const navPageLoad = (locale, page) => {
-    return (dispatch) => {
-        dispatch(navPageLoadStart(locale, page));
-        axios
-            .get("/pages/" + page + ".json")
-            .then((res) => {
-                dispatch(navPageLoadSuccess(locale, page, res.data));
-            })
-            .catch((err) => {
-                dispatch(navPageLoadFail(err));
-            });        
-    };
-};

@@ -4,7 +4,6 @@ import classes from './Layout.module.css';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 import axios from '../../axios-swordfish';
 import withErrorHandler from '../withErrorHandler/withErrorHandler';
-import Spinner from '../../components/UI/Spinner/Spinner';
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 
@@ -15,6 +14,8 @@ class Layout extends Component {
     componentDidMount() {
         console.log("[Layout.js] componentDidMount")
         this.props.onFectchNav();
+        this.props.onFetchLocales();
+
         
     }
     componentDidUpdate(prevProps) {
@@ -35,17 +36,14 @@ class Layout extends Component {
         //     this.setState((state, props) => ({page: props.match.params.page}));
         // }
 
-        let loadingSpinner = null;
-        if (this.props.loading) {
-            loadingSpinner = <Spinner />;
-        }             
+          
         return (
             <Aux>
-                {loadingSpinner}
                 <Toolbar 
                     locale={this.props.locale} 
                     page={this.props.page} 
-                    locales={this.props.nav}
+                    menus={this.props.nav}
+                    locales={this.props.locales}
 
                     />
                 <main className={classes.Content}>
@@ -60,14 +58,16 @@ const mapStateToProps = (state) => {
     return {
         nav: state.nagivation.nav,
         loading: state.nagivation.loading,
-        locale: state.nagivation.locale,
-        page: state.nagivation.page,
+        locale: state.pages.locale,
+        page: state.pages.page,
+        locales: state.locales.locales
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         onFectchNav: () => dispatch(actions.navFetch()),
+        onFetchLocales: () => dispatch(actions.localesFetch()),
     };
 };
 

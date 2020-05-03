@@ -11,22 +11,22 @@ const withErrorHandler = (WrappedComponent, axios) => {
         componentWillMount () {
             this.reqInterceptor = axios.interceptors.request.use(req => {
                 this.setState({error: null});
+                console.log(req)
                 return req;
             });
-            this.resInterceptor = axios.interceptors.response.use(res => res, error => {
+            this.resInterceptor = axios.interceptors.response.use(res => {
+                console.log("[withErrorHandler] " + res );
+                return res;
+            }, error => {
                 this.setState({error:error});
                 console.log("[withErrorHandler] " + error + " state.error=" + this.state.error);
+                return error;
             });
         }
 
         componentWillUnmount () {
             axios.interceptors.request.eject(this.reqInterceptor);
             axios.interceptors.response.eject(this.resInterceptor);
-        }
-
-        shouldComponentUpdate(nextProps, nextState) {
-            //console.log("[withErrorHandler] shouldcomponentupdate state.error=" + this.state.error);
-            return true;
         }
 
         errorConfirmedHandler = () => {

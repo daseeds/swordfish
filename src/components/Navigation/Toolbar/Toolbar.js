@@ -5,21 +5,20 @@ import DropDownItems from "../NavigationItems/DropDownItems/DropdownItems";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
+import LocalesMenu from '../LocalesMenu/LocalesMenu';
 
 const toolbar = (props) => {
     let localesDropDown = null;
-    let navigation = null;
-    let currentLocaleName = null;
     let menus = null;
+   
     //let currentLocale = null;
 
     console.log("[Toolbar.js] ", props);
 
-    if (props.locales) {
-        navigation = props.locales; //[props.currentLocale].menus;
-        localesDropDown = props.locales;
-        currentLocaleName = "Francais"; //props.locales[props.currentLocale].name;
+
+
+    if (props.menus) {
         //currentLocale = props.currentLocale;
         //TODO: Fix incoherence, layout gives a page and we need a menu
         // for (let [key] of Object.entries(localesDropDown)) {
@@ -27,14 +26,15 @@ const toolbar = (props) => {
         //     localesDropDown[key].locale = true;
         // }
 
-        menus = Object.keys(props.locales).map((itemKey) => {
+
+        menus = Object.keys(props.menus).map((itemKey) => {
             if (
-                props.locales[itemKey].type === null ||
-                !props.locales[itemKey].menus
+                props.menus[itemKey].type === null ||
+                !props.menus[itemKey].menus
             ) {
                 console.log(
                     "[NavigationItem] ",
-                    props.locales[itemKey].name[props.locale]
+                    props.menus[itemKey].name[props.locale]
                 );
                 return (
                     <Nav.Link
@@ -43,21 +43,34 @@ const toolbar = (props) => {
                             "/" +
                             props.locale +
                             "/" +
-                            props.locales[itemKey].url[props.locale]
+                            props.menus[itemKey].url[props.locale]
                         }
                     >
-                        {props.locales[itemKey].name[props.locale]}
+                        {props.menus[itemKey].name[props.locale]}
                     </Nav.Link>
                 );
             }
-            const dropdown = Object.keys(props.locales[itemKey].menus).map(
+            const dropdown = Object.keys(props.menus[itemKey].menus).map(
                 (dropdownKey) => {
                     return (
-                        <NavDropdown.Item 
+                        <NavDropdown.Item
                             as={Link}
-                            key={props.locales[itemKey].menus[dropdownKey].url[props.locale]}
-                            to={props.locales[itemKey].menus[dropdownKey].url[props.locale]}>
-                            {props.locales[itemKey].menus[dropdownKey].name[props.locale]}
+                            key={
+                                props.menus[itemKey].menus[dropdownKey].url[
+                                    props.locale
+                                ]
+                            }
+                            to={
+                                props.menus[itemKey].menus[dropdownKey].url[
+                                    props.locale
+                                ]
+                            }
+                        >
+                            {
+                                props.menus[itemKey].menus[dropdownKey].name[
+                                    props.locale
+                                ]
+                            }
                         </NavDropdown.Item>
                     );
                 }
@@ -65,7 +78,7 @@ const toolbar = (props) => {
 
             return (
                 <NavDropdown
-                    title={props.locales[itemKey].name[props.locale]}
+                    title={props.menus[itemKey].name[props.locale]}
                     id="basic-nav-dropdown"
                 >
                     {dropdown}
@@ -86,7 +99,7 @@ const toolbar = (props) => {
         //         Le Manoir de Juganville
         //     </a>
         //     <nav className={classes.DesktopOnly}>
-        //         <NavigationItems items={props.locales} locale={props.locale}/>
+        //         <NavigationItems items={props.menus} locale={props.locale}/>
         //     </nav>
         //     {/* <nav className={classes.LocalesDropDown}>
         //         <DropDownItems
@@ -99,37 +112,23 @@ const toolbar = (props) => {
         // <div className={classes.root}>
 
         // </div>
-        <Navbar bg="dark" expand="lg" variant="dark">
-            <Navbar.Brand href="#home">Le Manoir de Juganville</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="mr-auto">
-                    {menus}
-
-                </Nav>
-                <Nav>
-                    <NavDropdown
-                        alignRight
-                        title="Dropdown"
-                        id="basic-nav-dropdown"
-                    >
-                        <NavDropdown.Item href="#action/3.1">
-                            Action
-                        </NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">
-                            Another action
-                        </NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">
-                            Something
-                        </NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item href="#action/3.4">
-                            Separated link
-                        </NavDropdown.Item>
-                    </NavDropdown>
-                </Nav>
-            </Navbar.Collapse>
-        </Navbar>
+        <header>
+            <Navbar bg="dark" expand="lg" variant="dark">
+                <Navbar.Brand href="#home">
+                    Le Manoir de Juganville
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="mr-auto">{menus}</Nav>
+                    <Nav>
+                        <LocalesMenu 
+                            locales={props.locales} 
+                            locale={props.locale}
+                            menus={props.menus} />
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+        </header>
     );
 };
 

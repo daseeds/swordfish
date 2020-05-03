@@ -1,58 +1,58 @@
-import reducer from './navigation';
+import reducer from './locales';
 import * as actions from '../actions/actionsTypes';
 
-describe('navigation reducer', () => {
+describe('locales reducer', () => {
     it('should return the initial state', () => {
         expect(reducer(undefined, {})).toEqual({
-            nav: null,
             loading: false,
             error: null,
+            locales: null,
         });
     });
 
-    it('should store the nav and reset error on success', () => {
+
+    it('should store the page, locale and content on success', () => {
         expect(reducer({
-            nav: null,
-            loading: false,
-            error: 'some-error',     
-        },{
-            type: actions.NAV_FETCH_SUCCESS,
-            nav: 'some-nav',            
-        })).toEqual({
-            nav: 'some-nav',
             loading: false,
             error: null,
+            locales: null,
+        },{
+            type: actions.LOCALES_FETCH_SUCCESS,
+            locales: 'all-locales',            
+        })).toEqual({
+            loading: false,
+            error: null,
+            locales: 'all-locales',             
         })
     })
 
-    it('should set loading true on start', () => {
+    it('should set page loading true on start page fetch', () => {
         expect(reducer({
             loading: false,
             error: 'some-error',
-            nav: null,
+            locales: null,
         },{
-            type: actions.NAV_FETCH_START,
+            type: actions.LOCALES_FETCH_START,
         })).toEqual({
-            nav: null,
             loading: true,
             error: 'some-error',
+            locales: null,
         })
     })    
 
-    it('should set error and reset loading on failed', () => {
+    it('should set error and reset loading on failed page fetch', () => {
         expect(reducer({
-            nav: null,
             loading: true,
             error: null,
+            locales: null,
         },{
-            type: actions.NAV_FETCH_FAILED,
+            type: actions.LOCALES_FETCH_FAILED,
             error: 'some-error'
         })).toEqual({
-            nav: null,
             loading: false,
             error: 'some-error',
+            locales: null,
         })
     })    
-
 
 });

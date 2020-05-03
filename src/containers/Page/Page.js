@@ -16,31 +16,33 @@ class Page extends Component {
     }
 
     componentDidUpdate() {
-        // if (
-        //     this.props.match.params.locale !== this.props.locale ||
-        //     this.props.match.params.page !== this.props.page
-        // ) {
-        //     this.props.onPageLoad(
-        //         this.props.match.params.locale,
-        //         this.props.match.params.page
-        //     );
-       // }
+        console.log("[Page.js] componentDidUpdate", this.props)
+        if (
+            this.props.match.params.locale !== this.props.locale ||
+            this.props.match.params.page !== this.props.page
+        ) {
+            this.props.onPageLoad(
+                this.props.match.params.locale,
+                this.props.match.params.page
+            );
+       }
     }
 
     render() {
         let page = <Spinner />;
 
         if (!this.props.loading && this.props.content) {
-            page = <p> {this.props.content} </p>;
+            page = <p> {JSON.stringify(this.props.content)} </p>;
         }
-
+        if (!this.props.loading && !this.props.content) {
+            page = <p> {this.props.locale}/{this.props.page} - No content for this page </p>;
+        }        
         if (this.props.error) {
             page = <p> {this.props.error} </p>;
         }
 
         return (
             <div>
-                {navigator.language || navigator.userLanguage}
                 {page}
             </div>
         );
@@ -49,16 +51,18 @@ class Page extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        loading: state.nagivation.pageLoading,
-        content: state.nagivation.content,
-        error: state.nagivation.error,
+        loading: state.pages.loading,
+        content: state.pages.content,
+        error: state.pages.error,
+        locale: state.pages.locale,
+        page: state.pages.page
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         onPageLoad: (locale, page) =>
-            dispatch(actions.navPageLoad(locale, page)),
+            dispatch(actions.pageFetch(locale, page)),
     };
 };
 
