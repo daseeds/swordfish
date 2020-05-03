@@ -6,6 +6,8 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import navigationReducer from "./store/reducers/navigation";
+import pagesReducer from "./store/reducers/pages";
+import localesReducer from "./store/reducers/locales";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -17,6 +19,8 @@ const composeEnhancers =
 
 const reducer = combineReducers({
     nagivation: navigationReducer,
+    pages: pagesReducer,
+    locales: localesReducer,
 });
 
 const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
