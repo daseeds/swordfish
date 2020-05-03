@@ -23,6 +23,10 @@ const reducer = (state = initialState, action) => {
                 content: action.content,
                 error: null,
             });
+        case actions.PAGE_SET_LOCALE:
+            return updateObject(state, {
+                locale: action.locale
+            })
         default:
             return state;
     }

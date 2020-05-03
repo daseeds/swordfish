@@ -7,7 +7,7 @@ const LocalesMenu = (props) => {
     let locales = null;
     let localesMenuTitle = <PlaceHolder />;
 
-    if (props.locales && props.locale) {
+    if (props.locales && props.locale && props.page) {
         locales = Object.keys(props.locales).map((itemKey) => {
             return (
                 <NavDropdown.Item
@@ -29,7 +29,7 @@ const LocalesMenu = (props) => {
             </NavDropdown>
         );
     }
-    return (<React.Fragment> { localesMenuTitle }</React.Fragment>);
+    return (<React.Fragment>{ localesMenuTitle }</React.Fragment>);
 };
 
 export default LocalesMenu;

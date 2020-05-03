@@ -1,5 +1,6 @@
 import * as actions from "./actionsTypes";
 import axios from "../../axios-swordfish";
+import {getPageFromLink} from "../../shared/utility"
 
 export const pageFetchStart = () => {
     return {
@@ -23,7 +24,8 @@ export const pageFetchSuccess = (locale, page, content) => {
     };        
 };
 
-export const pageFetch = (locale, page) => {
+export const pageFetch = (locale, link, menus) => {
+    const page = getPageFromLink(link, locale, menus);
     return (dispatch) => {
         dispatch(pageFetchStart(locale, page));
         axios
@@ -37,3 +39,9 @@ export const pageFetch = (locale, page) => {
     };
 };
 
+export const pageSetLocale = (locale) => {
+    return {
+        type: actions.PAGE_SET_LOCALE,
+        locale: locale,
+    };        
+};

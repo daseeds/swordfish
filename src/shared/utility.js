@@ -31,3 +31,16 @@ export const getUserLocale = () => {
     }
     return null;
 }
+
+export const getPageFromLink = (link, locale, menus) => {
+    return Object.keys(menus).map(menuKey => {
+        if (!menus[menuKey].menus &&  menus[menuKey].link[locale] === link)
+            return menus[menuKey].page;
+        if (menus[menuKey].menus) {
+            return getPageFromLink(link, locale, menus[menuKey].menus);
+        }
+        return "";
+    }).reduce((arr, el) => {
+        return arr.concat(el);
+    }, "" );
+}

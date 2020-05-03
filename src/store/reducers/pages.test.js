@@ -13,22 +13,21 @@ describe('pages reducer', () => {
     });
 
 
-    it('should store the page, locale and content on success', () => {
+    it('should store the page, and content on success', () => {
         expect(reducer({
             loading: false,
             error: null,
-            locale: null,
+            locale: 'some-locale',
             page: null,
             content: null,
         },{
             type: actions.PAGE_FETCH_SUCCESS,
-            locale: 'fr',            
             page: 'some-page',
             content: 'some-content'
         })).toEqual({
             loading: false,
             error: null,
-            locale: 'fr',            
+            locale: 'some-locale',            
             page: 'some-page',
             content: 'some-content'               
         })
@@ -70,5 +69,24 @@ describe('pages reducer', () => {
             content: null ,
         })
     })    
+
+    it('should set locale with new value', () => {
+        expect(reducer({
+            loading: false,
+            error: null,
+            locale: 'some-locale',
+            page: null,
+            content: null,
+        },{
+            type: actions.PAGE_SET_LOCALE,
+            locale: 'some-new-locale'
+        })).toEqual({
+            loading: false,
+            error: null,
+            locale: 'some-new-locale',
+            page: null,    
+            content: null                
+        })
+    })        
 
 });

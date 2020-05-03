@@ -18,7 +18,7 @@ const composeEnhancers =
         : null || compose;
 
 const reducer = combineReducers({
-    nagivation: navigationReducer,
+    navigation: navigationReducer,
     pages: pagesReducer,
     locales: localesReducer,
 });

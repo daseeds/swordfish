@@ -56,8 +56,8 @@ class Layout extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        nav: state.nagivation.nav,
-        loading: state.nagivation.loading,
+        nav: state.navigation.nav,
+        loading: state.navigation.loading,
         locale: state.pages.locale,
         page: state.pages.page,
         locales: state.locales.locales

@@ -43,7 +43,7 @@ const toolbar = (props) => {
                             "/" +
                             props.locale +
                             "/" +
-                            props.menus[itemKey].url[props.locale]
+                            props.menus[itemKey].link[props.locale]
                         }
                     >
                         {props.menus[itemKey].name[props.locale]}
@@ -56,12 +56,12 @@ const toolbar = (props) => {
                         <NavDropdown.Item
                             as={Link}
                             key={
-                                props.menus[itemKey].menus[dropdownKey].url[
+                                props.menus[itemKey].menus[dropdownKey].link[
                                     props.locale
                                 ]
                             }
                             to={
-                                props.menus[itemKey].menus[dropdownKey].url[
+                                props.menus[itemKey].menus[dropdownKey].link[
                                     props.locale
                                 ]
                             }
@@ -84,11 +84,6 @@ const toolbar = (props) => {
                     {dropdown}
                 </NavDropdown>
             );
-            // return <DropDownItems
-            //             items={props.items[itemKey].menus}
-            //             key={props.items[itemKey].name[props.locale]}
-            //             locale={props.locale}
-            //             dropDownTitle={props.items[itemKey].name[props.locale]}/>
         });
     }
 
@@ -124,7 +119,8 @@ const toolbar = (props) => {
                         <LocalesMenu 
                             locales={props.locales} 
                             locale={props.locale}
-                            menus={props.menus} />
+                            menus={props.menus}
+                            page={props.page} />
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
