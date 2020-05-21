@@ -8,6 +8,7 @@ import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import navigationReducer from "./store/reducers/navigation";
 import pagesReducer from "./store/reducers/pages";
 import localesReducer from "./store/reducers/locales";
+import settingsReducer from "./store/reducers/settings";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -21,6 +22,7 @@ const reducer = combineReducers({
     navigation: navigationReducer,
     pages: pagesReducer,
     locales: localesReducer,
+    settings: settingsReducer
 });
 
 const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));

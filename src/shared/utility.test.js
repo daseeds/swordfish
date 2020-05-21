@@ -1,4 +1,4 @@
-import {getUserLocale, getPageFromLink} from './utility';
+import {getUserLocale, getPageFromLink, getLinkFromPage} from './utility';
 
 describe('utility', () => {
     it('should return fr', () => {
@@ -144,6 +144,7 @@ describe('utility', () => {
                             "fr": "La Baldaquin"
                         },
                         "type": "page",
+                        "page": "baldaquin",
                         "link": {
                             "en": "room-la-baldaquin",
                             "fr": "chambre-la-baldaquin"
@@ -180,7 +181,105 @@ describe('utility', () => {
                 "fr": "activite-autour-du-manoir"
             }
         }
-        })).toEqual("chambre-la-tour");
+        })).toEqual("baldaquin");
+    })    
+
+    it('should return link activities from page activite-autour-du-manoir and locale fr', () => {
+        expect(getLinkFromPage("activities", "fr", {
+            "rooms": {
+                "menus": {
+                    "baldaquin": {
+                        "name": {
+                            "en": "La Baldaquin",
+                            "fr": "La Baldaquin"
+                        },
+                        "type": "page",
+                        "link": {
+                            "en": "room-la-baldaquin",
+                            "fr": "chambre-la-baldaquin"
+                        }
+                    },
+                    "tour": {
+                        "name": {
+                            "en": "La Tour",
+                            "fr": "La Tour"
+                        },
+                        "page": "chambre-la-tour",
+                        "type": "page",
+                        "link": {
+                            "en": "room-la-tour",
+                            "fr": "chambre-la-tour"
+                        }
+                    }
+                },
+                "name": {
+                    "en": "The Rooms",
+                    "fr": "Les Chambres"
+                },
+                "type": "container"
+            },            
+            "activities": {
+            "name": {
+                "en": "Activities",
+                "fr": "Activités"
+            },
+            "page": "activities",
+            "type": "page",
+            "link": {
+                "en": "activities-around",
+                "fr": "activite-autour-du-manoir"
+            }
+        }
+        })).toEqual("activite-autour-du-manoir");
+    })    
+
+    it('should return link room-la-tour from page tour and locale en', () => {
+        expect(getLinkFromPage("tour", "en", {
+            "rooms": {
+                "menus": {
+                    "baldaquin": {
+                        "name": {
+                            "en": "La Baldaquin",
+                            "fr": "La Baldaquin"
+                        },
+                        "type": "page",
+                        "link": {
+                            "en": "room-la-baldaquin",
+                            "fr": "chambre-la-baldaquin"
+                        }
+                    },
+                    "tour": {
+                        "name": {
+                            "en": "La Tour",
+                            "fr": "La Tour"
+                        },
+                        "page": "chambre-la-tour",
+                        "type": "page",
+                        "link": {
+                            "en": "room-la-tour",
+                            "fr": "chambre-la-tour"
+                        }
+                    }
+                },
+                "name": {
+                    "en": "The Rooms",
+                    "fr": "Les Chambres"
+                },
+                "type": "container"
+            },            
+            "activities": {
+            "name": {
+                "en": "Activities",
+                "fr": "Activités"
+            },
+            "page": "activities",
+            "type": "page",
+            "link": {
+                "en": "activities-around",
+                "fr": "activite-autour-du-manoir"
+            }
+        }
+        })).toEqual("room-la-tour");
     })    
 
 });

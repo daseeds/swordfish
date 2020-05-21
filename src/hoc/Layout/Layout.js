@@ -15,6 +15,7 @@ class Layout extends Component {
         console.log("[Layout.js] componentDidMount")
         this.props.onFectchNav();
         this.props.onFetchLocales();
+        this.props.onFetchSettings();
 
         
     }
@@ -68,6 +69,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onFectchNav: () => dispatch(actions.navFetch()),
         onFetchLocales: () => dispatch(actions.localesFetch()),
+        onFetchSettings: () => dispatch(actions.settingsFetch()),
     };
 };
 

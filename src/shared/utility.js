@@ -32,6 +32,18 @@ export const getUserLocale = () => {
     return null;
 }
 
+export const getLinkFromPage = (page, locale, menus) => {
+    return Object.keys(menus).map(menuKey => {
+        if (menuKey === page)
+            return menus[menuKey].link[locale];
+        if (menus[menuKey].menus)
+            return getLinkFromPage(page, locale, menus[menuKey].menus);
+        return "";
+    }).reduce((arr, el) => {
+        return arr.concat(el);
+    }, "" );
+}
+
 export const getPageFromLink = (link, locale, menus) => {
     console.log("[getPageFromLink]", link, locale, menus)
     return Object.keys(menus).map(menuKey => {
