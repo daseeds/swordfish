@@ -134,4 +134,53 @@ describe('utility', () => {
         })).toEqual("chambre-la-tour");
     })    
 
+    it('should return page tour from chambre-la-baldaquin fr', () => {
+        expect(getPageFromLink("chambre-la-baldaquin", "fr", {
+            "rooms": {
+                "menus": {
+                    "baldaquin": {
+                        "name": {
+                            "en": "La Baldaquin",
+                            "fr": "La Baldaquin"
+                        },
+                        "type": "page",
+                        "link": {
+                            "en": "room-la-baldaquin",
+                            "fr": "chambre-la-baldaquin"
+                        }
+                    },
+                    "tour": {
+                        "name": {
+                            "en": "La Tour",
+                            "fr": "La Tour"
+                        },
+                        "page": "chambre-la-tour",
+                        "type": "page",
+                        "link": {
+                            "en": "room-la-tour",
+                            "fr": "chambre-la-tour"
+                        }
+                    }
+                },
+                "name": {
+                    "en": "The Rooms",
+                    "fr": "Les Chambres"
+                },
+                "type": "container"
+            },            
+            "activities": {
+            "name": {
+                "en": "Activities",
+                "fr": "Activités"
+            },
+            "page": "activities",
+            "type": "page",
+            "link": {
+                "en": "activities-around",
+                "fr": "activite-autour-du-manoir"
+            }
+        }
+        })).toEqual("chambre-la-tour");
+    })    
+
 });

@@ -33,6 +33,7 @@ export const getUserLocale = () => {
 }
 
 export const getPageFromLink = (link, locale, menus) => {
+    console.log("[getPageFromLink]", link, locale, menus)
     return Object.keys(menus).map(menuKey => {
         if (!menus[menuKey].menus &&  menus[menuKey].link[locale] === link)
             return menus[menuKey].page;

@@ -26,7 +26,11 @@ export const pageFetchSuccess = (locale, page, content) => {
 
 export const pageFetch = (locale, link, menus) => {
     const page = getPageFromLink(link, locale, menus);
+    if (!page) {
+        return (dispatch) => dispatch(pageFetchFail("No page for this link"));
+    }
     return (dispatch) => {
+        console.log("[PageReducer] Fetch page "+ page);
         dispatch(pageFetchStart(locale, page));
         axios
             .get("/pages/" + page + ".json")
@@ -43,5 +47,12 @@ export const pageSetLocale = (locale) => {
     return {
         type: actions.PAGE_SET_LOCALE,
         locale: locale,
+    };        
+};
+
+export const pageSetLink = (link) => {
+    return {
+        type: actions.PAGE_SET_LINK,
+        link: link,
     };        
 };

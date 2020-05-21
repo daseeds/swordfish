@@ -6,6 +6,7 @@ const initialState = {
     error: null,
     locale: null,
     page: null,
+    link: null,
     content: null,
 };
 
@@ -18,15 +19,18 @@ const reducer = (state = initialState, action) => {
         case actions.PAGE_FETCH_SUCCESS:
             return updateObject(state, {
                 loading: false,
-                locale: action.locale,
                 page: action.page,
                 content: action.content,
                 error: null,
             });
         case actions.PAGE_SET_LOCALE:
             return updateObject(state, {
-                locale: action.locale
-            })
+                locale: action.locale,
+            });
+        case actions.PAGE_SET_LINK:
+            return updateObject(state, {
+                link: action.link,
+            });
         default:
             return state;
     }

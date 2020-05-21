@@ -6,6 +6,7 @@ export const PAGE_FETCH_START = 'PAGE_FETCH_START';
 export const PAGE_FETCH_FAILED = 'PAGE_FETCH_FAILED';
 export const PAGE_FETCH_SUCCESS = 'PAGE_FETCH_SUCCESS';
 export const PAGE_SET_LOCALE = 'PAGE_SET_LOCALE';
+export const PAGE_SET_LINK = 'PAGE_SET_LINK';
 
 
 

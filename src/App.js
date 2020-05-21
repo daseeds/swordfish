@@ -11,7 +11,7 @@ function App() {
         <div className="App">
             <Layout>
                 <Switch>
-                    <Route path="/:locale/:page" component={Page} />
+                    <Route path="/:locale/:link" component={Page} />
                     <Route path="/:locale" component={Locale} />
                     <Route path="/" component={Root} />
                 </Switch>
