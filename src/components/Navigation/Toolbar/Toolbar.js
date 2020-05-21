@@ -1,22 +1,17 @@
 import React from "react";
-import classes from "./Toolbar.module.css";
-import NavigationItems from "../NavigationItems/NavigationItems";
-import DropDownItems from "../NavigationItems/DropDownItems/DropdownItems";
+//import classes from "./Toolbar.module.css";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
-import LocalesMenu from '../LocalesMenu/LocalesMenu';
+import LocalesMenu from "../LocalesMenu/LocalesMenu";
 
 const toolbar = (props) => {
-    let localesDropDown = null;
     let menus = null;
-   
+
     //let currentLocale = null;
 
     console.log("[Toolbar.js] ", props);
-
-
 
     if (props.menus) {
         //currentLocale = props.currentLocale;
@@ -25,7 +20,6 @@ const toolbar = (props) => {
         //     localesDropDown[key].page = localesDropDown[key].menus[props.currentPage].page;
         //     localesDropDown[key].locale = true;
         // }
-
 
         menus = Object.keys(props.menus).map((itemKey) => {
             if (
@@ -88,25 +82,7 @@ const toolbar = (props) => {
     }
 
     return (
-        // <header className={classes.Toolbar}>
 
-        //     <a className={classes.Brand} href="/">
-        //         Le Manoir de Juganville
-        //     </a>
-        //     <nav className={classes.DesktopOnly}>
-        //         <NavigationItems items={props.menus} locale={props.locale}/>
-        //     </nav>
-        //     {/* <nav className={classes.LocalesDropDown}>
-        //         <DropDownItems
-        //             items={localesDropDown}
-        //             dropDownTitle={currentLocaleName}
-        //             currentLocale={currentLocale}
-        //             />
-        //     </nav> */}
-        // </header>
-        // <div className={classes.root}>
-
-        // </div>
         <header>
             <Navbar bg="dark" expand="lg" variant="dark">
                 <Navbar.Brand href="#home">
@@ -116,11 +92,12 @@ const toolbar = (props) => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">{menus}</Nav>
                     <Nav>
-                        <LocalesMenu 
-                            locales={props.locales} 
+                        <LocalesMenu
+                            locales={props.locales}
                             locale={props.locale}
                             menus={props.menus}
-                            page={props.page} />
+                            page={props.page}
+                        />
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
