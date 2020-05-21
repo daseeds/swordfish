@@ -1,5 +1,8 @@
 import * as actions from "./actionsTypes";
 import axios from "axios";
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
 
 export const authStart = () => {
     return {
@@ -36,6 +39,28 @@ export const checkAuthTimeout = (expirationTime) => {
     };
 };
 
+export const authGoogle = () => {
+    return (dispatch) => {
+        dispatch(authStart());
+        let provider = new firebase.auth.GoogleAuthProvider();
+        firebase
+            .auth()
+            .signInWithPopup(provider)
+            .then(function (result) {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                var token = result.credential.accessToken;
+                // The signed-in user info.
+                var user = result.user;
+                localStorage.setItem("token", token);
+                localStorage.setItem("userId", JSON.stringify(user));
+                dispatch(authSuccess(token, user));
+            })
+            .catch(function (error) {
+                dispatch(authFailed(error));
+            });
+    };
+};
+
 export const auth = (email, password, isSignup) => {
     return (dispatch) => {
         dispatch(authStart());
@@ -53,10 +78,12 @@ export const auth = (email, password, isSignup) => {
         axios
             .post(url, authData)
             .then((response) => {
-                const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-                localStorage.setItem('token', response.data.idToken);
-                localStorage.setItem('expirationDate', expirationDate);
-                localStorage.setItem('userId', response.data.localId);
+                const expirationDate = new Date(
+                    new Date().getTime() + response.data.expiresIn * 1000
+                );
+                localStorage.setItem("token", response.data.idToken);
+                localStorage.setItem("expirationDate", expirationDate);
+                localStorage.setItem("userId", response.data.localId);
                 dispatch(
                     authSuccess(response.data.idToken, response.data.localId)
                 );
@@ -68,29 +95,33 @@ export const auth = (email, password, isSignup) => {
     };
 };
 
-export const setAuthRedirectPath = (path) => {
-    return {
-        type: actions.SET_AUTH_REDIRECT_PATH,
-        path: path
-    }
-}
+// export const setAuthRedirectPath = (path) => {
+//     return {
+//         type: actions.SET_AUTH_REDIRECT_PATH,
+//         path: path,
+//     };
+// };
 
 export const authCheckState = () => {
-    return dispatch => {
-        const token = localStorage.getItem('token');
+    return (dispatch) => {
+        const token = localStorage.getItem("token");
         if (!token) {
             dispatch(logout());
-        }
-        else {
-            const expirationDate = new Date(localStorage.getItem('expirationDate'));
-            if (expirationDate <= new Date()) {
-                dispatch(logout());
-            } else {
-                const userId = localStorage.getItem('userId');
+        } else {
+            // const expirationDate = new Date(
+            //     localStorage.getItem("expirationDate")
+            // );
+            // if (expirationDate <= new Date()) {
+            //     dispatch(logout());
+            // } else {
+                const userId = JSON.parse(localStorage.getItem("userId"));
                 dispatch(authSuccess(token, userId));
-                dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
-            }
-            
+                // dispatch(
+                //     checkAuthTimeout(
+                //         (expirationDate.getTime() - new Date().getTime()) / 1000
+                //     )
+                // );
+            // }
         }
-    }
-}
+    };
+};

@@ -9,6 +9,9 @@ class Page extends Component {
     };
 
     componentDidMount() {
+        console.log("[Page.js] componentDidMount", this.props.match.params.locale,
+        this.props.match.params.page,
+        this.props.menus)
         if (!this.props.menus) return;
         this.props.onPageLoad(
             this.props.match.params.locale,
@@ -31,8 +34,9 @@ class Page extends Component {
         if (!this.props.menus) return;
 
         if (
-            this.props.match.params.locale !== this.props.locale ||
-            this.props.match.params.link !== this.props.link
+            (this.props.match.params.locale !== this.props.locale ||
+            this.props.match.params.link !== this.props.link) ||
+            !this.props.page
         ) {
             this.props.onPageLoad(
                 this.props.match.params.locale,
@@ -42,13 +46,21 @@ class Page extends Component {
         }
     }
 
+    onAuthGoogleHandler = () => {
+        this.props.onAuthGoogle();
+    }
+
     render() {
         let page = <Spinner />;
+        let user = null;
+        if (this.props.userId) {
+            user = this.props.userId.displayName;
+        }
 
         if (!this.props.loading && this.props.content) {
             page = <p> {JSON.stringify(this.props.content)} </p>;
         }
-        if (!this.props.loading && !this.props.content) {
+        if (this.props.page && !this.props.loading && !this.props.content) {
             page = (
                 <p>
                     {" "}
@@ -61,7 +73,13 @@ class Page extends Component {
             page = <p> {this.props.error} </p>;
         }
 
-        return <div>{page}</div>;
+        return (
+            <div>
+                {page}
+                <p>{user}</p>
+                <button onClick={this.onAuthGoogleHandler}>Sign in</button>
+            </div>
+            );
     }
 }
 
@@ -74,6 +92,7 @@ const mapStateToProps = (state) => {
         page: state.pages.page,
         menus: state.navigation.nav,
         link: state.pages.link,
+        user: state.auth.userId
     };
 };
 
@@ -83,6 +102,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(actions.pageFetch(locale, page, menus)),
         onLocaleChanged: (locale) => dispatch(actions.pageSetLocale(locale)),
         onLinkChanged: (link) => dispatch(actions.pageSetLink(link)),
+        onAuthGoogle: () => dispatch(actions.authGoogle()),
     };
 };
 
