@@ -13,7 +13,7 @@ const LocalesMenu = (props) => {
             return (
                 <NavDropdown.Item
                     as={Link}
-                    key={props.locales[itemKey]}
+                    key={"locale-" + props.locales[itemKey].name}
                     to={"/" + itemKey + "/" + getLinkFromPage(props.page, itemKey, props.menus)}
                 >
                     {props.locales[itemKey].name}
