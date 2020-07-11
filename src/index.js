@@ -13,11 +13,9 @@ import authReducer from "./store/reducers/auth";
 
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import firebase from "firebase/app";
-import firebaseConfig from "./firebase.config";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-firebase.initializeApp(firebaseConfig);
+import Firebase, { FirebaseContext } from "./components/Firebase";
 
 const composeEnhancers =
     process.env.NODE_ENV === "development"
@@ -37,9 +35,11 @@ const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
+            <FirebaseContext.Provider value={new Firebase()}>
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>
+            </FirebaseContext.Provider>
         </Provider>
     </React.StrictMode>,
     document.getElementById("root")

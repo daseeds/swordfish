@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import Spinner from "../../components/UI/Spinner/Spinner";
+import { withFirebase } from '../../components/Firebase';
 
 class Page extends Component {
     state = {
@@ -9,9 +10,12 @@ class Page extends Component {
     };
 
     componentDidMount() {
-        console.log("[Page.js] componentDidMount", this.props.match.params.locale,
-        this.props.match.params.page,
-        this.props.menus)
+        console.log(
+            "[Page.js] componentDidMount",
+            this.props.match.params.locale,
+            this.props.match.params.page,
+            this.props.menus
+        );
         if (!this.props.menus) return;
         this.props.onPageLoad(
             this.props.match.params.locale,
@@ -34,8 +38,8 @@ class Page extends Component {
         if (!this.props.menus) return;
 
         if (
-            (this.props.match.params.locale !== this.props.locale ||
-            this.props.match.params.link !== this.props.link) ||
+            this.props.match.params.locale !== this.props.locale ||
+            this.props.match.params.link !== this.props.link ||
             !this.props.page
         ) {
             this.props.onPageLoad(
@@ -47,14 +51,19 @@ class Page extends Component {
     }
 
     onAuthGoogleHandler = () => {
-        this.props.onAuthGoogle();
-    }
+        if (this.props.isAuthenticated) {
+            this.props.onSignOutGoogle(this.props.firebase);
+        } else {
+            this.props.onAuthGoogle(this.props.firebase);
+        }
+    };
 
     render() {
         let page = <Spinner />;
         let user = null;
-        if (this.props.userId) {
-            user = this.props.userId.displayName;
+        if (this.props.user) {
+            console.log(this.props.user);
+            user = this.props.user.displayName;
         }
 
         if (!this.props.loading && this.props.content) {
@@ -79,7 +88,7 @@ class Page extends Component {
                 <p>{user}</p>
                 <button onClick={this.onAuthGoogleHandler}>Sign in</button>
             </div>
-            );
+        );
     }
 }
 
@@ -92,7 +101,8 @@ const mapStateToProps = (state) => {
         page: state.pages.page,
         menus: state.navigation.nav,
         link: state.pages.link,
-        user: state.auth.userId
+        user: state.auth.userId,
+        isAuthenticated: state.auth.token !== null,
     };
 };
 
@@ -102,8 +112,9 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(actions.pageFetch(locale, page, menus)),
         onLocaleChanged: (locale) => dispatch(actions.pageSetLocale(locale)),
         onLinkChanged: (link) => dispatch(actions.pageSetLink(link)),
-        onAuthGoogle: () => dispatch(actions.authGoogle()),
+        onAuthGoogle: (firebase) => dispatch(actions.authGoogle(firebase)),
+        onSignOutGoogle: (firebase) => dispatch(actions.signOutGoogle(firebase))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Page);
+export default withFirebase(connect(mapStateToProps, mapDispatchToProps)(Page));

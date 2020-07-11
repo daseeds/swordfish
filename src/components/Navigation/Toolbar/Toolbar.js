@@ -5,6 +5,11 @@ import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
 import LocalesMenu from "../LocalesMenu/LocalesMenu";
+import Button from "react-bootstrap/Button";
+import * as actions from "../../../store/actions/index";
+import { connect } from "react-redux";
+import Modal from "../../UI/Modal/Modal"
+
 
 const toolbar = (props) => {
     let menus = null;
@@ -81,16 +86,28 @@ const toolbar = (props) => {
         });
     }
 
+    let buttonAdd = null;
+    if (props.isAuthenticated) {
+        buttonAdd = <Button size="sm" variant="success">+</Button>;
+    }
+
+    let form = null;
+
     return (
 
         <header>
+            <Modal show={false} >
+                {form}
+            </Modal>
             <Navbar bg="dark" expand="lg" variant="dark">
                 <Navbar.Brand href="#home">
                     Le Manoir de Juganville
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="mr-auto">{menus}</Nav>
+                    <Nav className="mr-auto">{menus}
+                    {buttonAdd}                    
+                    </Nav>
                     <Nav>
                         <LocalesMenu
                             locales={props.locales}
@@ -105,4 +122,17 @@ const toolbar = (props) => {
     );
 };
 
-export default toolbar;
+const mapStateToProps = (state) => {
+    return {
+        isAuthenticated: state.auth.token !== null,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onTryAutoSignup: () => dispatch(actions.authCheckState()),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(toolbar);
+

@@ -1,8 +1,5 @@
 import * as actions from "./actionsTypes";
 import axios from "axios";
-import firebase from 'firebase/app';
-import 'firebase/auth';
-
 
 export const authStart = () => {
     return {
@@ -39,20 +36,42 @@ export const checkAuthTimeout = (expirationTime) => {
     };
 };
 
-export const authGoogle = () => {
+export const signOutGoogle = (firebase) => {
+    return (dispatch) => {
+        firebase.doSignOut()
+            .then(function () {
+                dispatch(logout());
+            })
+            .catch(function (error) {
+                dispatch(authFailed(error));
+            });
+    };
+};
+
+export const authGoogle = (firebase) => {
     return (dispatch) => {
         dispatch(authStart());
-        let provider = new firebase.auth.GoogleAuthProvider();
-        firebase
-            .auth()
-            .signInWithPopup(provider)
-            .then(function (result) {
+        firebase.doSignInWithGoogle()
+            .then(result => {
                 // This gives you a Google Access Token. You can use it to access the Google API.
-                var token = result.credential.accessToken;
+                const token = result.credential.accessToken;
                 // The signed-in user info.
-                var user = result.user;
+                const user = result.user;
                 localStorage.setItem("token", token);
                 localStorage.setItem("userId", JSON.stringify(user));
+                const expirationTime = user.i.w;
+                
+                const expirationDate = new Date(
+                     expirationTime
+                );                
+                console.log("expirationTime", expirationTime, expirationDate)
+                firebase
+                    .user(result.user.uid)
+                    .set({
+                        username: result.user.displayName,
+                        email: result.user.email,
+                        roles: {},
+                    });                
                 dispatch(authSuccess(token, user));
             })
             .catch(function (error) {
@@ -102,26 +121,13 @@ export const auth = (email, password, isSignup) => {
 //     };
 // };
 
-export const authCheckState = () => {
+export const authCheckState = (firebase) => {
     return (dispatch) => {
         const token = localStorage.getItem("token");
-        if (!token) {
-            dispatch(logout());
-        } else {
-            // const expirationDate = new Date(
-            //     localStorage.getItem("expirationDate")
-            // );
-            // if (expirationDate <= new Date()) {
-            //     dispatch(logout());
-            // } else {
-                const userId = JSON.parse(localStorage.getItem("userId"));
-                dispatch(authSuccess(token, userId));
-                // dispatch(
-                //     checkAuthTimeout(
-                //         (expirationDate.getTime() - new Date().getTime()) / 1000
-                //     )
-                // );
-            // }
-        }
+        firebase.auth.onAuthStateChanged(user => {
+            user ? dispatch(authSuccess(token, user))
+            : dispatch(logout());
+        })
+
     };
 };

@@ -8,10 +8,12 @@ import Page from "./containers/Page/Page";
 import { connect } from "react-redux";
 import * as actions from "./store/actions/index";
 import { useEffect} from 'react';
+import { withFirebase } from './components/Firebase';
+
 
 
 const App = (props) => {
-    useEffect(() => props.onTryAutoSignup());
+    useEffect(() => props.onTryAutoSignup(props.firebase));
     return (
         <div className="App">
             <Layout>
@@ -33,8 +35,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onTryAutoSignup: () => dispatch(actions.authCheckState()),
+        onTryAutoSignup: (firebase) => dispatch(actions.authCheckState(firebase)),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withFirebase(connect(mapStateToProps, mapDispatchToProps)(App));
