@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import { withFirebase } from '../../components/Firebase';
+import Footer from '../../components/UI/Footer/Footer';
 
 class Page extends Component {
     state = {
@@ -87,7 +88,9 @@ class Page extends Component {
                 {page}
                 <p>{user}</p>
                 <button onClick={this.onAuthGoogleHandler}>Sign in</button>
+                <Footer />
             </div>
+            
         );
     }
 }
